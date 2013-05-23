@@ -1,0 +1,215 @@
+CannedPostResponder
+by Charlie Pashayan
+
+INTRODUCTION
+
+CannedPostResponder is a piece of software that connects to Reddit, scans the
+newest posts in selected subreddits, and posts a specified response whenever a
+post matching a specified regular expression is found.  The user interacts with
+CannedPostResponder via a script called cpr_admin.py.  This script is also used
+to manage the settings and instructions for CannedPostResponder.
+
+You may want to alias cpr_admin.py or create a script that will call it from
+somewhere in your filepath.  It has to stay in the same directory as the files
+that came with it.  
+
+I wrote this software on a Macbook Pro running OS X 10.7 using Python 2.7.  It
+should run on other *nix systems, but I can think of at least one reason why it
+would fail under Windows.
+
+SETTINGS
+
+        username
+        This is the username you want CannedPostResponder to log in as  and
+post under.
+
+        password
+        The password for the username above.  Passwords are not encrypted.
+
+        proprietor
+        This should be your name or main Reddit account.  It is included in the
+user_agent that CannedPostResponder submits when connecting to Reddit.
+
+        subreddits
+        This is a list of subreddits that CannedPostResponder will look through
+when searching for relevant posts.  Add items to it using the --add_subreddits
+flag; remove items using the --del_subreddits flag.  
+
+        limit
+        The maximum number of submissions that CannedPostResponder will pull
+when checking a subreddit for the first time.  (After that it will just pull
+all the submissions it hasn't seen yet.)  The largest number of submissions
+that can be pulled in one request is 99.  Larger pulls will take considerably
+longer because Reddit only allows an average of one request every 2 seconds.
+
+        sleep_time
+        After CannedPostResponder has scanned all the subreddits, This setting
+tells it how many seconds to wait before checking for more new submissions. 
+You'll probably want to make this pretty big; 3600 (an hour) or even 86400 (a
+day) would be reasonable places to start.
+
+        email
+        The email address that CannedPostResponder will send email reports
+from.  Leave it blank if you don't want it to generate these reports.
+
+        email_password
+        The password for CannedPostResponder's email address.  Passwords are
+not encrypted.
+
+        recipients
+        This is a list of email addresses you want CannedPostResponder to send
+reports to.  Add items to it using the --add_recipients flag; remove items
+using the --del_recipients flag.
+
+        smtp_server
+        The email server that CannedPostResponder will use for sending out
+reports from.  I know that my email routines work for GMail.  I can't speak for
+any other service.  So use smtp.gmail.com if at all possible.
+
+        smtp_port
+        The port on the email server above that CannedPostResponder will
+connect to.  Should be 465.
+
+        text_editor
+        When you edit the instructions file or create messages, cpr_admin.py
+will open the files for you in the text editor you specify here.  I use emacs.
+
+        log_reader
+        CannedPostResponder generates a log file which you view by running
+cpr_admin.py with the --log flag enabled.  This setting tells cpr_admin.py what
+program to use to open the file.
+
+FLAGS
+
+Unless otherwise mentioned, all the settings above are managed by invoking
+cpr_admin.py with the setting's name as a flag (that is, prepended with "--")
+followed by the value you want the setting to hold.  For instance, if you want
+to set sleep_time to 6000 and the proprietor to Joey Joe Joe Jr. Shabadoo, type
+the following command:
+
+        $ cpr_admin.py --sleep_time 6000 --proprietor "Joey Joe Joe Jr.
+Shabdoo"
+        
+Obviously flags of this type only work for settings that contain exactly one
+value.  For lists (subreddits and recipients), you need separate flags for
+adding and subtracting values.  So the flag to add to a list has the form
+--add_<list name> and the flag to remove form a list looks like --del_<list
+name>.  So to add learnpython to the list of subreddits and to remove
+FakeNameMcHenry@example.com and contrived@example.com from the list of
+recipients, type the following command:
+
+        $ cpr_admin.py --add_subreddit learnpython --del_recipients
+FakeNameMcHenry@example.com contrived@example.com
+
+In any case, whatever setting is changed, cpr_admin.py will show you the new
+value after making the change (unless invoked with the --silent command).  If
+you run cpr_admin.py with no flags, it will simply dump all the settings.  No
+attempt is made to encrypt or hide passwords, by the way.  So make sure they
+aren't important ones.
+
+In addition to managing settings, cpr_admin.py is the interface for the
+CannedPostResponder.  So most of the other flags deal with that.
+
+        --run
+        Run an instance of CannedPostResponder.  Only one CannedPostResponder
+can run at a time on a given system, so if one already exists, cpr_admin.py
+will report the error and exit.
+
+        --suspend
+        Suspend the currently running instance of CannedPostResponder.
+
+        --resume
+        Resume the currently suspended running instance of CannedPostResponder.
+
+        --kill
+        Kill the currently running instance of CannedPostResponder.
+
+        --log
+        Ths flag opens the log file generated by all previous instances of
+CannedPostResponder.
+
+There are also flags for managing the text files that CannedPostResponder needs
+in order to run:
+
+        --instructions
+        Edit the list of instructions for CannedPostResponder.  The standard
+for this list will described below.
+
+        --message <file name>
+        Open the file by the given name for editing.  Use this command to
+create CannedPostResponder's canned responses.
+
+The flags --silent, --help and --version do what you'd expect, except for the
+fact that cpr_admin.py considers itself to be part of CannedPostResponder, and
+when asked for its version it will respond accordingly. 
+
+INSTRUCTIONS
+
+The instructions file is one of the most delicate parts of CannedPostResponder.
+It's also the program's most powerful hook.  You will need to know how to write
+regular expressions in Python in order to write instructions for
+CannedPostResponder.  Here's a link to the documentation on this:
+
+        http://docs.python.org/2/library/re.html
+
+Once you're convinced you understand that well enough, you can start telling
+CannedPostResponder what to do.  Each instruction for CannedPostResponder
+consists of one (logical) line of text containing:
+
+        1) A Python-ready regular expression;
+        2) Optionally, flags to the regex engine--if there are more than one of
+these they must be bitwise OR'd;
+        3) The name of a text file containing the response you want
+CannedPostResponder to post when it finds a submission matching the regular
+expression.
+
+If you wish, you may separate these three elemenets with commas.  Think of the
+first two items in this list as options to re.compile().  Write them exactly as
+you would if you were writing code using that function.  Here's an example:
+
+        r"matt\s+gr(ee|oa)ning", re.I, "pronunciation_guide.txt"
+
+The strings representing the regular expression and the file name can be
+printed in any way allowed within Python source code, because they will be read
+in with Python's standard tokenizer.  An individual string can be printed out
+across multiple physical lines, as long as all the substrings are enclosed
+within parentheses.  This will make it a little easier to write long,
+complicated regular expressions.  You may also insert comments or comment out
+instructions using the "#".  Here's an example:
+
+        ("here's a (picture of|drawing by) my " 
+         # find obvious, annoying karma seekers
+         "((autistic|blind|disabled|overweight|tall|funny|sexy)(,\s*)?)+ " 
+         # match a list of possible ailments and descriptors
+         "(sister|brother|cousin|niece|nephew|daughter|son)"), 
+         # establishe relationship to poster
+        re.I, "please_stop_doing_this.txt" 
+        # express your prefab discontent with this all too typical post
+
+The regular expression you provide will be matched against a string consisting
+of the following:
+
+        1) The subreddit the post was found on;
+        2) The title of the post;
+        3) The body of the post.
+
+These three will be joined by newlines.  The body may contain newlines as well,
+but the first two newlines encountered are guaranteed to mark the boundaries
+between items 1 and 2 of the list above.  Your regular expression can match any
+position within this string, unless of course you set the string beginning and
+end boundaries explicitly.
+
+One final note is that the regular expressions in the instructions file will be
+matched against each post sequentially, and the file associated with the first
+successful match will be posted.  So in a case where multiple regular
+expressions might match the same post, the order the instructions are placed in
+will matter.  For example, here is a badly written instructions file:
+
+        u"i love m(ue|ü)sli", re.I, "i_agree.txt"
+        u"dammit, i love m(ue|ü)sli", re.I, "i_agree_like_hell.txt"
+
+The problem is that the second instruction is redundant and can never be run,
+because anything that will be caught by the second expression is guaranteed to
+be caught by the first.
+
+
