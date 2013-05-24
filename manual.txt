@@ -9,10 +9,6 @@ post matching a specified regular expression is found.  The user interacts with
 CannedPostResponder via a script called cpr_admin.py.  This script is also used
 to manage the settings and instructions for CannedPostResponder.
 
-You may want to alias cpr_admin.py or create a script that will call it from
-somewhere in your filepath.  It has to stay in the same directory as the files
-that came with it.  
-
 I wrote this software on a Macbook Pro running OS X 10.7 using Python 2.7.  It
 should run on other *nix systems, but I can think of at least one reason why it
 would fail under Windows.
@@ -25,10 +21,12 @@ your installed modules to make sure you have everything that
 CannedPostResponder needs to run.  If anything is missing, you can install it
 using pip or easy_install.  
 
-Then, if you want, install_cpr.py will create a script allowing you to call
-cpr_admin.py from anywhere on your system, so that you don't need to be in
-CannedPostResponder's home directory to invoke it.  If you want to do this,
-just give install_cpr.py the name you'd like to use for the script.
+Then, if everything is in order, install_cpr.py will create a script allowing
+you to call cpr_admin.py from anywhere on your system, so that you don't need
+to be in CannedPostResponder's home directory to invoke it.  By default, this
+script will be called cpr_admin and it will be stored in the current directory,
+but you can call it whatever you want by providing the desired name to
+install_cpr.py as a positional artument.
 
 SETTINGS
 
