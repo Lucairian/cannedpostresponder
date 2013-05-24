@@ -26,7 +26,7 @@ you to call cpr_admin.py from anywhere on your system, so that you don't need
 to be in CannedPostResponder's home directory to invoke it.  By default, this
 script will be called cpr_admin and it will be stored in the current directory,
 but you can call it whatever you want by providing the desired name to
-install_cpr.py as a positional artument.
+install_cpr.py as a positional argument.
 
 SETTINGS
 
