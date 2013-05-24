@@ -48,11 +48,11 @@ program_description = ("Scan Reddit for threads matching certain criteria "
 # want absolute path so program can run from anywhere
 path = os.path.dirname(os.path.abspath(__file__)) + os.sep
 
-alreadies_file = path + "alreadies.txt"
-settings_file = path + "settings.txt"
-instructions_file = path + "instructions.txt"
-latest_file = path + "latest.txt"
-pid_file = path + "pid.txt"
+alreadies_file = path + ".alreadies.txt"
+settings_file = path + ".settings.txt"
+instructions_file = path + ".instructions.txt"
+latest_file = path + ".latest.txt"
+pid_file = path + ".pid.txt"
 source_file = path + "cannedpostresponder.py"
 
 no_kill = False
