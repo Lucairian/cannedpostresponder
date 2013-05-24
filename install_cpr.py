@@ -94,7 +94,7 @@ fullpath = (os.path.dirname(os.path.abspath(__file__)) +
 fp = open(args.name, "w")
 fp.write("# this script is a wrapper for cpr_admin.py, to allow it\n")
 fp.write("# to be called easily from somewhere in the user's PATH\n")
-fp.write(fullpath + "\n")
+fp.write(fullpath + "$@\n")
 fp.close()
 os.chmod(args.name, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP |
          stat.S_IROTH | stat.S_IXOTH)

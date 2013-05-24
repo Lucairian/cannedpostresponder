@@ -17,6 +17,19 @@ I wrote this software on a Macbook Pro running OS X 10.7 using Python 2.7.  It
 should run on other *nix systems, but I can think of at least one reason why it
 would fail under Windows.
 
+INSTALLATION
+
+You don't need to do much to install CannedPostResponder, but I've included a
+script called install_cpr.py to make it easier to set up.  install_cpr.py scans
+your installed modules to make sure you have everything that
+CannedPostResponder needs to run.  If anything is missing, you can install it
+using pip or easy_install.  
+
+Then, if you want, install_cpr.py will create a script allowing you to call
+cpr_admin.py from anywhere on your system, so that you don't need to be in
+CannedPostResponder's home directory to invoke it.  If you want to do this,
+just give install_cpr.py the name you'd like to use for the script.
+
 SETTINGS
 
         username
@@ -157,8 +170,8 @@ CannedPostResponder what to do.  Each instruction for CannedPostResponder
 consists of one (logical) line of text containing:
 
         1) A Python-ready regular expression;
-        2) Optionally, flags to the regex engine--if there are more than one of
-these they must be bitwise OR'd;
+        2) Optionally, flags for the regex engine--if there are more than one
+of these they must be bitwise OR'd;
         3) The name of a text file containing the response you want
 CannedPostResponder to post when it finds a submission matching the regular
 expression.
