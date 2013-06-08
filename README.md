@@ -8,4 +8,4 @@ For more information about using `CannedPostResponder`, read the file manual.txt
 
 Included in this directory is a helper script called `install_cpr.py`.  It will check to make sure your system has all the modules that `CannedPostResponder` needs to run.  If anything is missing, it will let you know.  But if everything is in order, `install_cpr.py` will create a wrapper script for `cpr_admin.py`.  You can then place this script wherever is convenient within your filepath.  `cpr_admin.py` has to be in the same directory as all the other files associated with `CannedPostResponder`, so this wrapper script should make using `CannedPostResponder` a lot easier.
 
-This program and all associated documentation copyright Charlie Pashayan in 2013.
+This program and all associated documentation copyright Charlie Pashayan 2013.
