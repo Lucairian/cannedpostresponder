@@ -1,0 +1,1 @@
+{'username': '', 'text_editor': 'emacs', 'log_reader': 'less', 'smtp_port': 465, 'recipients': [], 'email_password': '', 'password': '', 'subreddits': [], 'smtp_server': 'smtp.gmail.com', 'sleep_time': 3600, 'proprietor': '', 'limit': 99, 'email': ''}
